@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/PwnYouLin/blogimage@main/img/202408131033148.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/PwnYouLin/blogimage@main/img/202408131035514.png">
 <meta property="article:published_time" content="2024-08-13T01:45:35.000Z">
-<meta property="article:modified_time" content="2024-08-13T02:36:54.368Z">
+<meta property="article:modified_time" content="2024-08-13T14:40:23.740Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/PwnYouLin/blogimage@main/img/202408131003544.png">
@@ -295,7 +295,7 @@
 <p>要发送、接收和分析 CAN 包，我们需要 CAN 分析工具。Can-utils 是一组 Linux 实用程序，允许 Linux 与车载 CAN 网络进行通信。Can-utils 包含 4个我们经常使用的主要工具：</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo apt <span class="hljs-keyword">install</span> can-utils<br><span class="hljs-comment">#candump : 显示、过滤和记录CAN数据到文件。candump并不会解码数据。</span><br><span class="hljs-comment">#canplayer : 对记录的CAN数据进行重放。</span><br><span class="hljs-comment">#cansend : 发送CAN数据。</span><br><span class="hljs-comment">#cansniffer : 显示CAN数据并高亮显示变化的字节。</span><br></code></pre></td></tr></table></figure>
 
-<p>然后奖ICSim下载下来</p>
+<p>然后将ICSim下载下来</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/zombiecraig/</span>IcSim.git<br></code></pre></td></tr></table></figure>
 
 <p>切换到ICSim目录，执行”make”命令，就可以编译成功。编译成功后，先运行setup_vcan.sh文件创建vcan0网卡</p>
@@ -418,6 +418,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/10/28/%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81/" title="强网拟态初赛pwn部分wp">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">强网拟态初赛pwn部分wp</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
